@@ -1,12 +1,10 @@
+import { Outlet } from 'react-router-dom'
 
-
-function App() {
-
+export default function App() {
   return (
-    <div className="flex justify-center items-center bg-radial bg-center bg-47.86% bg-gradient-to-br from-white to-purple-900 w-full h-screen">
-     texsting ths 
-    </div>
+    <>
+      {/* renders all children i.e all other routes */}
+      <Outlet />
+    </>
   )
 }
-
-export default App

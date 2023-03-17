@@ -8,8 +8,10 @@ import Avatar2 from './avatars/avatar2.png'
 import Avatar3 from './avatars/avatar3.png'
 import Avatar4 from './avatars/avatar4.png'
 import RobotAvatar from './avatars/robot.png'
+import LogoAlt from "./img/logoAlt.png"
 
 export {
+    
     PreloaderImg,
     Logo,
     GeneralImg,
@@ -20,4 +22,6 @@ export {
     Avatar3,
     Avatar4,
     RobotAvatar,
+    LogoAlt,
+
 }

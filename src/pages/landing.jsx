@@ -60,7 +60,7 @@ const contributors = [
           <img src={MainImg} alt=""  className='pb-14 pr-9 w-[20rem]'/>
         </div>
         <div className='z-[3]'>
-          <div className="pl-8 py-4 flex -space-x-2 overflow-hidden">
+          <div className="pl-4 py-4 flex -space-x-2 overflow-hidden">
             {contributors.map((user, index) => (
               <img 
               key={user.handle} 

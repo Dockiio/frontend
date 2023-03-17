@@ -11,6 +11,7 @@ import {
   RobotAvatar,
 } from '../assets'
 import { NavLink } from 'react-router-dom'
+import DefaultLayout from '../layout/defaultLayout';
 
 export default function Landing() {
 const contributors = [
@@ -20,14 +21,7 @@ const contributors = [
   { handle: 'bobsmth', avatarUrl: `${Avatar4}` },
 ];
   return (
-    <div
-        className="w-screen object-cover px-20 h-screen bg-center bg-cover bg-no-repeat"
-        style={{ backgroundImage: `url(${GeneralImg})` }}
-    >
-      {/* decoration */}
-      <div className='fixed top-2 left-0 w-full pt-6 flex justify-center items-center'>
-        <img src={MidEllipse} alt="" className='w-[40%]'/>
-      </div>
+    <DefaultLayout>
       {/* header */}
       <div className='flex py-3 justify-between items-center'>
         <div>
@@ -89,7 +83,7 @@ const contributors = [
           </div>
         </div>
       </div>
-    </div>
+    </DefaultLayout>
     
   )
 }

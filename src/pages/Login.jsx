@@ -4,15 +4,13 @@ import DefaultLayout from '../layout/defaultLayout'
 import { LogoAlt } from "../assets/index"
 
 //firebase
-import {auth, 
+import {
+  auth, 
   db, 
-  createUserWithEmailAndPassword, 
   doc,
   setDoc,
   signInWithPopup,
   provider,
-  addDoc,
-  collection,
   
 } from "../firebase/firebase.config"
   

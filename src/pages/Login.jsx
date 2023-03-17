@@ -160,7 +160,7 @@ export default function Login() {
                     <div className='pt-4'>
                         <h4 className='text-md text-black font-tomorrow font-semibold pl-2 text-center' >Don't have an account? 
                             <span className='text-[#302F5C]'>
-                                <NavLink to="/login"> Register</NavLink>
+                                <NavLink to="/register"> Register</NavLink>
                             </span>
                         </h4>
                     </div>

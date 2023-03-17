@@ -23,7 +23,7 @@ const contributors = [
   return (
     <DefaultLayout>
       {/* header */}
-      <div className='flex py-3 justify-between items-center z-[3]'>
+      <div className='flex py-2 justify-between items-center z-[3]'>
         <div>
           <img src={Logo} alt="logo" className='w-20 '/>
         </div>

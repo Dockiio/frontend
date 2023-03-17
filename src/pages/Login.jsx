@@ -107,7 +107,7 @@ export default function Login() {
   return (
     <DefaultLayout>
         <div className='w-full h-screen flex justify-center items-center '>
-            <div className='w-1/2 h-[43rem] bg-white bg-opacity-30 shadow-xl backdrop-filter backdrop-blur-2xl rounded-xl'>
+            <div className='w-1/2 h-[40rem] bg-white bg-opacity-30 shadow-xl backdrop-filter backdrop-blur-2xl rounded-xl'>
                 <div className='flex justify-center items-center flex-col gap-1'>
                     <img src={ LogoAlt } alt="" className='w-20'/>
                     <h2 className='text-xl text-[#1A0634] font-tomorrow font-semibold'>Welcome Back</h2>
@@ -160,7 +160,7 @@ export default function Login() {
                     <div className='pt-4'>
                         <h4 className='text-md text-black font-tomorrow font-semibold pl-2 text-center' >Don't have an account? 
                             <span className='text-[#302F5C]'>
-                                <NavLink to="/login"> Register</NavLink>
+                                <NavLink to="/register"> Register</NavLink>
                             </span>
                         </h4>
                     </div>

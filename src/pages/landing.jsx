@@ -23,7 +23,7 @@ const contributors = [
   return (
     <DefaultLayout>
       {/* header */}
-      <div className='flex py-3 justify-between items-center z-[3]'>
+      <div className='flex py-2 justify-between items-center z-[3]'>
         <div>
           <img src={Logo} alt="logo" className='w-20 '/>
         </div>
@@ -60,7 +60,7 @@ const contributors = [
           <img src={MainImg} alt=""  className='pb-14 pr-9 w-[20rem]'/>
         </div>
         <div className='z-[3]'>
-          <div className="pl-8 py-4 flex -space-x-2 overflow-hidden">
+          <div className="pl-4 py-4 flex -space-x-2 overflow-hidden">
             {contributors.map((user, index) => (
               <img 
               key={user.handle} 

@@ -57,7 +57,7 @@ const contributors = [
           </div>
         </div>
         <div>
-          <img src={MainImg} alt=""  className='pb-8 w-[20rem]'/>
+          <img src={MainImg} alt=""  className='pb-12 pr-4 w-[20rem]'/>
         </div>
         <div className='z-[3]'>
           <div className="pl-8 py-4 flex -space-x-2 overflow-hidden">

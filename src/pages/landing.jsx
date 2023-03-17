@@ -23,13 +23,13 @@ const contributors = [
   return (
     <DefaultLayout>
       {/* header */}
-      <div className='flex py-3 justify-between items-center'>
+      <div className='flex py-3 justify-between items-center z-[3]'>
         <div>
           <img src={Logo} alt="logo" className='w-20 '/>
         </div>
-        <div>
+        <div className='z-[999]'>
           <NavLink 
-            to="/"
+            to="/login"
             className="font-semibold font-poppins text-black text-lg underline"
           >
             Login

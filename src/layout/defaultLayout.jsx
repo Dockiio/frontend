@@ -4,7 +4,7 @@ import { GeneralImg, MidEllipse } from '../assets/index'
 export default function DefaultLayout({children}) {
   return (
     <div
-        className="w-screen object-cover px-20 h-screen bg-center bg-cover bg-no-repeat"
+        className="w-full object-cover px-20 h-auto py-4 bg-center bg-cover bg-no-repeat"
         style={{ backgroundImage: `url(${GeneralImg})` }}
     >
       {/* decoration */}

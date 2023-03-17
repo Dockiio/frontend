@@ -1215,7 +1215,7 @@ firebase@^9.17.2:
     "@firebase/storage-compat" "0.3.2"
     "@firebase/util" "1.9.3"
 
-firebaseui@^6.0.0:
+firebaseui@^6.0.0, firebaseui@^6.0.2:
   version "6.0.2"
   resolved "https://registry.yarnpkg.com/firebaseui/-/firebaseui-6.0.2.tgz#14411920e17a7986e2ae969cb4890dfbf94fbfc5"
   integrity sha512-Jwwn2I657loKrvedeCrwED9UibLFl8Cm0uH2ntDBSCpruWzG4HXlIWb35WsDdXMILRPQjJ1PwVwuRsrnsxcaXA==

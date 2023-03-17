@@ -17,11 +17,9 @@ import {auth,
 } from "../firebase/firebase.config"
   
 import Toast from '../components/toast/toast';
-
-export default function Register() {
+export default function Login() {
     const [email, setEmail] = useState('')
-    const [username, setUsername] = useState('')
-      const [password, setPassword] = useState('')
+    const [password, setPassword] = useState('')
 
     const [isLoading, setIsLoading] = useState(false)
     const [showToast, setShowToast] = useState(false);
@@ -29,7 +27,7 @@ export default function Register() {
     const navigate = useNavigate();
     const validateForm = () => {
         let isValid = true
-        if ( email == '' || password == '' || username == '' ) {
+        if ( email == '' || password == '' ) {
 
         isValid = false
         setMessage('invalid credential')
@@ -45,47 +43,32 @@ export default function Register() {
         e.preventDefault()
         setIsLoading(true)
         setShowToast(true);
-        if(validateForm()) {
-
-            createUserWithEmailAndPassword(auth, email, password)
+        if (validateForm()) {
+            signInWithEmailAndPassword(
+                auth,
+                email,
+                password
+            )
             .then(async(userCredential) => {
-              setMessage("success")
-              const uid = userCredential.user.uid;
-
-              const userDocRef = doc(db, 'users', uid);
-
-              const userData = {
-                email: email,
-                username: username
-              };
-
-              localStorage.setItem('docRef', uid);
-              return setDoc(userDocRef, userData);
-                
-            })
-            .then(() => { 
-              navigate('/chatbot');
+                setMessage("success")
+                const user = userCredential.user;
+                StorageSave(user.uid);
+                navigate('/chatbot');
             })
             .catch((err) => {
-                if (err?.message == "Firebase: Password should be at least 6 characters (auth/weak-password).") {
-                    setMessage("your password is too short please retry")
-                    setIsLoading(false)
-                } 
-                else if(err?.message == "Firebase: Error (auth/email-already-in-use)."){
-                    setMessage("This email is been used by someone else")
-                    setIsLoading(false)
+               
+                if (err?.message == "Firebase: Error (auth/wrong-password).") {
+                  setMessage("wrong password/email")
+                  setIsLoading(false)
                 }
-                else if(err?.message == "Firebase: Error (auth/network-request-failed)."){
-                    setMessage("please turn on the internet connection")
-                    setIsLoading(false)
-                }
-                else {
-                    setMessage(err?.message)
-                    setIsLoading(false)
+                else{
+                  setMessage(err?.message)
+                  setIsLoading(false)
                 }
             })
         }
-      }
+    }
+
   const handleGoogle = (e) => {
             e.preventDefault()
 
@@ -129,12 +112,12 @@ export default function Register() {
             <div className='w-1/2 h-[43rem] bg-white bg-opacity-30 shadow-xl backdrop-filter backdrop-blur-2xl rounded-xl'>
                 <div className='flex justify-center items-center flex-col gap-1'>
                     <img src={ LogoAlt } alt="" className='w-20'/>
-                    <h2 className='text-xl text-[#1A0634] font-tomorrow font-semibold'>Create An Account</h2>
+                    <h2 className='text-xl text-[#1A0634] font-tomorrow font-semibold'>Welcome Back</h2>
                 </div>
 
                 <form action="" className='px-10 pt-14'>
-                    <div className='flex w-full gap-10'>
-                        <div className='w-1/2'>
+                    
+                        <div className='w-full'>
                             <label htmlFor="email" className='text-md text-[#302F5C] font-tomorrow font-semibold pl-2'>Email</label>
                             <input 
                             type="email" 
@@ -144,17 +127,7 @@ export default function Register() {
                             onChange={e => setEmail(e.target.value)}
                             />
                         </div>
-                        <div className='w-1/2'>
-                            <label htmlFor="username" className='text-md text-[#302F5C] font-tomorrow font-semibold pl-2'>Username</label>
-                            <input 
-                            type="text" 
-                            placeholder='Nemerem' 
-                            className='mt-2 pl-3 w-full py-4 rounded-2xl bg-[#F7F5F5] outline-none border-none'
-                            value={username}
-                            onChange={e => setUsername(e.target.value)}
-                            />
-                        </div>
-                    </div>
+                    
                     <div className='w-full mt-6'>
                         <label htmlFor="password" className='text-md text-[#302F5C] font-tomorrow font-semibold pl-2'>Password</label>
                         <input 
@@ -170,10 +143,10 @@ export default function Register() {
                     </div>
                     <div>
                         <button 
-                        onClick={handleSubmit} 
+                        onClick={handleSubmit}
                         disabled={isLoading}
                         className='w-full py-4 rounded-xl bg-[#5664E5] font-tomorrow  font-bold text-white'>
-                            {isLoading ? 'please wait...' : 'Register'}
+                            {isLoading ? 'please wait...' : 'Login'}
                         </button>
                     </div>
                     <div className='text-center text-[#7F7F86] font-tomorrow  font-bold my-3 text-xl'>or</div>
@@ -186,10 +159,10 @@ export default function Register() {
                         </button>
                         
                     </div>
-                    <div className='pt-5'>
-                        <h4 className='text-md gap-3 text-black font-tomorrow font-semibold pl-2 text-center' >Already have an account? 
+                    <div className='pt-4'>
+                        <h4 className='text-md text-black font-tomorrow font-semibold pl-2 text-center' >Don't have an account? 
                             <span className='text-[#302F5C]'>
-                                <NavLink to="/login"> Login</NavLink>
+                                <NavLink to="/login"> Register</NavLink>
                             </span>
                         </h4>
                     </div>

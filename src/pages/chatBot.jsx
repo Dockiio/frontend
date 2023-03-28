@@ -1,6 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import { GeneralImg, MidEllipse } from '../assets/index'
+import SideNav from '../components/common/sideNav'
+import TopNav from '../components/common/topNav'
+
 export default function ChatBot() {
+
   const [predict, setPredict] = useState("")
   const l = ['Fungal_infection', 'Allergy', 'GERD', 'Chronic_cholestasis',
         'Drug_Reaction', 'Peptic_ulcer_diseae', 'AIDS', 'Diabetes',
@@ -33,20 +38,24 @@ export default function ChatBot() {
   });
   }
   return (
-    <div> 
-      <form action="">
-                        <div className='w-1/2'>
-                            <label htmlFor="email" className='text-md text-[#302F5C] font-tomorrow font-semibold pl-2'>Email</label>
-                            <input 
-                            type="email" 
-                            placeholder='example@gmail.com' 
-                            className='mt-2 pl-3 w-full py-4 rounded-2xl bg-[#F7F5F5] outline-none border-none'
-                            value={predict}
-                            onChange={e => setPredict(e.target.value)}
-                            />
-                        </div>
-      <button onClick={handleSubmit}>submit</button>
-      </form>
+    <div
+        className="w-full object-cover h-max bg-center bg-cover bg-no-repeat"
+        style={{ backgroundImage: `url(${"https://res.cloudinary.com/phantom1245/image/upload/v1679974352/dockii/generalImg_mfdjrd.png" ||GeneralImg})` }}
+    >
+      {/* decoration */}
+      <div className='fixed top-2 left-0 w-full pt-6 flex justify-center items-center'>
+        <img src={MidEllipse} alt="" className='w-[40%]'/>
+      </div>
+      <div className='flex flex-row'>
+        <section className=' sticky top-0 left-0'>
+          <SideNav />
+        </section>
+        <main className='w-full'>
+          <section className='w-full fixed top-0 '>
+            <TopNav />
+          </section> 
+        </main>
+      </div>
     </div>
   )
 }

@@ -25,7 +25,7 @@ const contributors = [
       {/* header */}
       <div className='flex py-2 justify-between items-center z-[3]'>
         <div>
-          <img src={Logo} alt="logo" className='w-20 '/>
+          <img src={"https://res.cloudinary.com/phantom1245/image/upload/v1679974349/dockii/logo_ntubpc.png" || Logo} alt="logo" className='w-20 '/>
         </div>
         <div className='z-[999]'>
           <NavLink 
@@ -57,7 +57,7 @@ const contributors = [
           </div>
         </div>
         <div>
-          <img src={MainImg} alt=""  className='pb-14 pr-9 w-[20rem]'/>
+          <img src={"https://res.cloudinary.com/phantom1245/image/upload/v1679974349/dockii/mainImg_wwmt4j.png" || MainImg} alt=""  className='pb-14 pr-9 w-[20rem]'/>
         </div>
         <div className='z-[3]'>
           <div className="pl-4 py-4 flex -space-x-2 overflow-hidden">

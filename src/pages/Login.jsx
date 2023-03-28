@@ -109,7 +109,7 @@ export default function Login() {
         <div className='w-full h-screen flex justify-center items-center '>
             <div className='w-1/2 h-[40rem] bg-white bg-opacity-30 shadow-xl backdrop-filter backdrop-blur-2xl rounded-xl'>
                 <div className='flex justify-center items-center flex-col gap-1'>
-                    <img src={ LogoAlt } alt="" className='w-20'/>
+                    <img src={ "https://res.cloudinary.com/phantom1245/image/upload/v1679974349/dockii/logoAlt_wjktd5.png" || LogoAlt } alt="" className='w-20'/>
                     <h2 className='text-xl text-[#1A0634] font-tomorrow font-semibold'>Welcome Back</h2>
                 </div>
 

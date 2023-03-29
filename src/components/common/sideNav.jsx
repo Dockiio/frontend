@@ -32,7 +32,7 @@ export default function SideNav() {
   return (
       <div className='sticky top-0 left-0'>
         <div className=" transition-all ease-in-out duration-300 flex flex-col items-center h-screen w-[18rem] rounded-r-xl bg-[#FFFFFF] bg-opacity-20">
-            <div className='py-10 w-full bg-[#FFFFFF] bg-opacity-30 '>
+            <div className='py-9 w-full bg-[#FFFFFF] bg-opacity-30 '>
               <h1 className=' font-extrabold text-center text-xl'>hey, {username}👋🏾</h1>
             </div>
         </div>

@@ -1,10 +1,19 @@
-import React, { useState, Fragment } from 'react'
+import React, { useState, Fragment, useEffect } from 'react'
 import axios from 'axios'
 import { GeneralImg, MidEllipse } from '../assets/index'
 import SideNav from '../components/common/sideNav'
 import TopNav from '../components/common/topNav'
 import { Combobox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
+//firebase
+import { 
+  db, 
+  doc, 
+  updateDoc,
+  setDoc,
+  arrayUnion,
+  getDoc
+  } from "../firebase/firebase.config"
 
   const categories = 
   [
@@ -148,7 +157,26 @@ export default function ChatBot() {
   const [selected, setSelected] = useState(categories[0])
   const [query, setQuery] = useState('')
   const [diagonsis, setDiagnosis] = useState("")
+ const [messages, setMessages] = useState([]);
 
+  // Listen to changes in the messages array
+
+        const fetchItems = async () => {
+
+                    
+            let uid = localStorage.getItem('docRef');
+            const userDocRef = doc(db, 'users', uid);
+            const docSnap = await getDoc(userDocRef);
+            
+            if (docSnap.exists()) {
+              setMessages(docSnap.data().messages);
+            } else {
+              // doc.data() will be undefined in this case
+              console.log("No such document!");
+            }
+        }
+
+        fetchItems();
 
   const filteredCategory =
     query === ''
@@ -164,10 +192,11 @@ const baseUrl = 'https://quixotic-earth-production.up.railway.app';
 
 const predictDisease = async (e) => {
   e.preventDefault();
+
   try {
     const params = selected.name.toString();
     console.log(params)
-    const response = await axios.get(`${baseUrl}/predict?symp_lst=${params}`, {
+    const response = await axios.get(`${baseUrl}/predict?symp_lst=${params}&symp_lst=loss_of_smell`, {
     method: 'GET',
     headers: {
       'Accept': 'application/json',
@@ -176,6 +205,21 @@ const predictDisease = async (e) => {
     });
     setDiagnosis(response.data.pred)
 
+    let uid = localStorage.getItem('docRef');
+    const userDocRef = doc(db, 'users', uid);
+    await updateDoc(userDocRef, {
+      messages: arrayUnion({
+        symptoms: params,
+        diagnosis: response.data.pred,
+        timestamp: new Date().getTime(),
+      }),
+    });
+    // const userData = [{
+    //   symtoms: message,
+    //   diagnosis: response.data.pred,
+    //   timestamp: Date.now(),
+    // }];
+    // updateDoc(userDocRef, { messages: arrayUnion(...userData)})
     return response.data;
   } catch (error) {
     console.error(error);
@@ -190,7 +234,7 @@ const predictDisease = async (e) => {
 
   return (
     <div
-        className="w-full object-cover h-max bg-center bg-cover bg-no-repeat"
+        className="w-full sticky top-0 object-cover h-max bg-center bg-cover bg-no-repeat"
         style={{ backgroundImage: `url(${"https://res.cloudinary.com/phantom1245/image/upload/v1679974352/dockii/generalImg_mfdjrd.png" ||GeneralImg})` }}
     >
       {/* decoration */}
@@ -206,32 +250,54 @@ const predictDisease = async (e) => {
             <TopNav />
           </section>
           <section className='mt-24 w-full '>
-<div className="flex flex-col  h-screen bg-gray-200">
-  <div className="flex-1 overflow-y-auto p-6">
+<div className="flex flex-col mb-14  ">
+  <div className="flex-1 p-6">
     <div className="flex flex-col  space-y-4 w-full">
-      <div className="rounded-lg bg-white p-4 max-w-[30rem] shadow-md">
-        <p className="text-black">Hello , Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad odit deleniti aperiam numquam? Molestiae, doloribus odio, velit tenetur quisquam placeat officia ipsam dicta atque commodi ullam modi ducimus sapiente! Similique explicabo perspiciatis impedit? i am your AI Doctor what symptoms are you having </p>
+      <div className="rounded-lg flex gap-3 bg-white bg-opacity-30 p-4 max-w-[25rem] shadow-md">
+        <div>
+            <img src="https://res.cloudinary.com/phantom1245/image/upload/v1679977841/dockii/Ellipse_13_y0fxfk.png" alt="" />
+        </div> 
+        <div>
+          <p className="text-black">Hello , i am your AI Doctor what symptoms are you having? </p>
+        </div>
       </div>
-      <div className='w-full flex justify-end items-end'>
-         {selected.name && (
-          <div className="rounded-lg   max-w-[30rem] bg-white p-4 shadow-md">
-            {selected.name}
-          </div>
-        )}
+      <div className="flex-grow w-full">
+        {messages &&
+          messages.map((message) => (
+            <div key={message.timestamp} className="flex flex-col w-full justify-between  items-center">
+              <div className='w-full flex justify-end items-end'>
+                <div  className="rounded-lg bg-opacity-30 flex justify-center items-center gap-3 max-w-[30rem] bg-white p-4 shadow-md">
+                  <div>
+                    <img src="https://res.cloudinary.com/phantom1245/image/upload/v1680124827/dockii/Ellipse_15_v7m1zr.png" alt="" />
+                  </div> 
+                  <div className=" ">{message.symptoms}</div>
+                </div>
+                
+              </div>
+               <div className='w-full flex justify-start items-start'>
+                {message.diagnosis == "" ? null : (
+                  <div className="rounded-lg bg-opacity-40 flex justify-center items-center max-w-[30rem] bg-white p-4 shadow-md">
+                    <div>
+                        <img src="https://res.cloudinary.com/phantom1245/image/upload/v1679977841/dockii/Ellipse_13_y0fxfk.png" alt="" />
+                    </div> 
+                    
+                    <div>
+                      here is a diagnosis that might help you  {message.diagnosis}
+                    </div>
+                  </div>
+                )}
+              </div>
+              
+            </div>
+          ))}
       </div>
-      <div className='w-full flex justify-start items-start'>
-         {diagonsis == "" ? null : (
-          <div className="rounded-lg   max-w-[30rem] bg-white p-4 shadow-md">
-            here is a diagnosis that might help you  {diagonsis}
-          </div>
-        )}
-      </div>   
+       
 
     </div>
   </div>
 
 </div>
-  <div className="px-8 sticky  bottom-0 w-full shadow-md">
+  <div className="px-8 fixed bg-white bg-opacity-20 bottom-0 w-full shadow-md">
     <form className="flex w-full flex-row items-center gap-3 ">
 
         <div className=" w-[60%]">

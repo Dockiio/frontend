@@ -8,7 +8,7 @@ import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 
   const categories = 
   [
-  { id: 1, name: 'itching' },
+  { id: 1, name: '' },
   { id: 2, name: 'skin_rash' },
   { id: 3, name: 'nodal_skin_eruptions' },
   { id: 4, name: 'continuous_sneezing' },
@@ -139,14 +139,15 @@ import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
   { id: 129, name: 'blister' },
   { id: 130, name: 'red_sore_around_nose' },
   { id: 131, name: 'yellow_crust_ooze' },
-  { id: 132, name: 'prognosis' }
+  { id: 132, name: 'prognosis' },
+  { id: 133, name: 'itching' },
   ]
 export default function ChatBot() {
 
   const [predict, setPredict] = useState("")
   const [selected, setSelected] = useState(categories[0])
   const [query, setQuery] = useState('')
-
+  const [diagonsis, setDiagnosis] = useState("")
 
 
   const filteredCategory =
@@ -161,17 +162,19 @@ export default function ChatBot() {
 
 const baseUrl = 'https://quixotic-earth-production.up.railway.app';
 
-const predictDisease = async (symptoms) => {
+const predictDisease = async (e) => {
+  e.preventDefault();
   try {
-    const params = new URLSearchParams(symptoms).toString();
-    const response = await axios.get(`${baseUrl}/predict?${params}`, {
+    const params = selected.name.toString();
+    console.log(params)
+    const response = await axios.get(`${baseUrl}/predict?symp_lst=${params}`, {
     method: 'GET',
     headers: {
       'Accept': 'application/json',
     },
     mode: 'no-cors',
     });
-    console.log(response.data)
+    setDiagnosis(response.data.pred)
 
     return response.data;
   } catch (error) {
@@ -179,13 +182,11 @@ const predictDisease = async (symptoms) => {
   }
 };
 
-// Example usage:
-const symptoms = {
-  symp_lst: ['skin_peeling'],
-};
-const result = predictDisease(symptoms);
-console.log(result);
-
+// // Example usage:
+// const symptoms = {
+//   symp_lst: ,
+// };
+// console.log(symptoms)
 
   return (
     <div
@@ -196,7 +197,7 @@ console.log(result);
       <div className='fixed top-2 left-0 w-full pt-6 flex justify-center items-center'>
         <img src={MidEllipse} alt="" className='w-[40%]'/>
       </div>
-      <div className='flex flex-row'>
+      <div className='flex flex-row z-[3]'>
         <section className=' sticky top-0 left-0'>
           <SideNav />
         </section>
@@ -204,36 +205,41 @@ console.log(result);
           <section className='w-full fixed top-0 '>
             <TopNav />
           </section>
-          <section className='mt-24'>
-<div className="flex flex-col z-[999] h-screen bg-gray-200">
+          <section className='mt-24 w-full '>
+<div className="flex flex-col  h-screen bg-gray-200">
   <div className="flex-1 overflow-y-auto p-6">
     <div className="flex flex-col  space-y-4 w-full">
       <div className="rounded-lg bg-white p-4 max-w-[30rem] shadow-md">
-        <p className="text-gray-600">Hello , Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad odit deleniti aperiam numquam? Molestiae, doloribus odio, velit tenetur quisquam placeat officia ipsam dicta atque commodi ullam modi ducimus sapiente! Similique explicabo perspiciatis impedit? i am your AI Doctor what symptoms are you having </p>
+        <p className="text-black">Hello , Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad odit deleniti aperiam numquam? Molestiae, doloribus odio, velit tenetur quisquam placeat officia ipsam dicta atque commodi ullam modi ducimus sapiente! Similique explicabo perspiciatis impedit? i am your AI Doctor what symptoms are you having </p>
       </div>
       <div className='w-full flex justify-end items-end'>
-         {predict == "" ? "" : (
+         {selected.name && (
           <div className="rounded-lg   max-w-[30rem] bg-white p-4 shadow-md">
-          {predict}
-        </div>
+            {selected.name}
+          </div>
         )}
       </div>
-     
-      
+      <div className='w-full flex justify-start items-start'>
+         {diagonsis == "" ? null : (
+          <div className="rounded-lg   max-w-[30rem] bg-white p-4 shadow-md">
+            here is a diagnosis that might help you  {diagonsis}
+          </div>
+        )}
+      </div>   
 
     </div>
   </div>
 
 </div>
-  <div className="px-8 fixed bottom-0 w-full shadow-md">
-    <form >
+  <div className="px-8 sticky  bottom-0 w-full shadow-md">
+    <form className="flex w-full flex-row items-center gap-3 ">
 
-        <div className=" w-full">
+        <div className=" w-[60%]">
           <Combobox value={selected} onChange={setSelected}>
-            <div className="relative mt-1">
-              <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
+            <div className=" my-2">
+              <div className="w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
                 <Combobox.Input
-                  className="w-full border-none outline-none py-6 pl-5 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"
+                  className="w-full border-none outline-none py-6 pl-5 text-sm leading-5 text-gray-900 focus:ring-0"
                   displayValue={(category) => category.name}
                   onChange={(event) => setQuery(event.target.value)}
                 />
@@ -251,7 +257,7 @@ console.log(result);
                 leaveTo="opacity-0"
                 afterLeave={() => setQuery('')}
               >
-                <Combobox.Options className="fixed top-[22rem] max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                <Combobox.Options className="fixed top-[22rem] max-h-60 w-[60%] overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                   {filteredCategory.length === 0 && query !== '' ? (
                     <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
                       Nothing found.
@@ -261,7 +267,7 @@ console.log(result);
                       <Combobox.Option
                         key={category.id}
                         className={({ active }) =>
-                          `relative top-3 cursor-default select-none py-2 rounded-md pl-10 pr-4 ${
+                          `flex cursor-default select-none py-3 rounded-md pl-10 pr-4 ${
                             active ? 'bg-red-500 text-white' : 'text-gray-900'
                           }`
                         }
@@ -270,7 +276,7 @@ console.log(result);
                         {({ selected, active }) => (
                           <>
                             <span
-                              className={`block truncate ${
+                              className={`flex flex-row truncate ${
                                 selected ? 'font-medium' : 'font-normal'
                               }`}
                             >
@@ -294,6 +300,9 @@ console.log(result);
               </Transition>
             </div>
           </Combobox>
+        </div>
+        <div className='w-[30%]'>
+          <button type="submit" onClick={predictDisease} className="bg-red-900 px-10 text-white py-4 rounded-2xl">send</button>
         </div>
     </form>
   </div>

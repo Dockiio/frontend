@@ -51,7 +51,7 @@ export default function Login() {
             .then(async(userCredential) => {
                 setMessage("success")
                 const user = userCredential.user;
-                StorageSave(user.uid);
+                localStorage.setItem('docRef', user.uid);
                 navigate('/chatbot');
             })
             .catch((err) => {
@@ -69,7 +69,7 @@ export default function Login() {
     }
 
   const handleGoogle = (e) => {
-            e.preventDefault()
+    e.preventDefault()
 
     signInWithPopup(auth, provider)
     .then(async(result) => {

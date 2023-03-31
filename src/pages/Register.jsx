@@ -127,7 +127,7 @@ export default function Register() {
             <h2 className="text-xl text-[#1A0634] font-tomorrow font-semibold">Create An Account</h2>
           </div>
 
-          <form action="" className="px-10 md:pt-14 pt-5">
+          <form action="" className="md:px-10 px-5 md:pt-14 pt-5">
             <div className="flex lg:flex-row flex-col w-full gap-4 lg:gap-10">
               <div className="w-full lg:w-1/2">
                 <label htmlFor="email" className="text-md text-[#302F5C] font-tomorrow font-semibold pl-2">Email</label>

@@ -113,7 +113,7 @@ export default function Login() {
             <h2 className="text-xl text-[#1A0634] font-tomorrow font-semibold">Welcome Back</h2>
           </div>
 
-          <form action="" className="px-10 pt-14">
+          <form action="" className="md:px-10 px-5 pt-14">
                     
             <div className="w-full">
               <label htmlFor="email" className="text-md text-[#302F5C] font-tomorrow font-semibold pl-2">Email</label>

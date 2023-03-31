@@ -10,6 +10,7 @@ import {
   doc,
   setDoc,
   signInWithPopup,
+  signInWithEmailAndPassword,
   provider,
   
 } from "../firebase/firebase.config"

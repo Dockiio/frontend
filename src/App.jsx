@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom'
+import { Outlet } from "react-router-dom";
 
 export default function App() {
   return (
@@ -6,5 +6,5 @@ export default function App() {
       {/* renders all children i.e all other routes */}
       <Outlet />
     </>
-  )
+  );
 }

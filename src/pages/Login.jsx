@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import React, { useState } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 import DefaultLayout from "../layout/defaultLayout";
@@ -74,7 +75,6 @@ export default function Login() {
     signInWithPopup(auth, provider)
       .then(async(result) => {
         setMessage("success");
-        const photo = result.user.photoURL;
         const displayName = result.user.displayName;
         const email = result.user.email;
         const uid = result.user.uid;
@@ -97,7 +97,6 @@ export default function Login() {
         navigate("/chatbot");
       })
       .catch((error) => {
-        const errorCode = error.code;
         const errorMessage = error.message;
         console.log(error || errorMessage);
       });
@@ -108,7 +107,7 @@ export default function Login() {
   return (
     <DefaultLayout>
       <div className="w-full h-screen flex justify-center items-center ">
-        <div className="w-1/2 h-[40rem] bg-white bg-opacity-30 shadow-xl backdrop-filter backdrop-blur-2xl rounded-xl">
+        <div className="lg:w-1/2 w-[95%] h-[40rem] bg-white bg-opacity-30 shadow-xl backdrop-filter backdrop-blur-2xl rounded-xl">
           <div className="flex justify-center items-center flex-col gap-1">
             <img src={ "https://res.cloudinary.com/phantom1245/image/upload/v1679974349/dockii/logoAlt_wjktd5.png" || LogoAlt } alt="" className="w-20"/>
             <h2 className="text-xl text-[#1A0634] font-tomorrow font-semibold">Welcome Back</h2>

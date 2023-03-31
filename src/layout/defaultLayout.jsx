@@ -17,7 +17,7 @@ export default function DefaultLayout({children}) {
     return () => window.removeEventListener("resize", handleResize);
   }, [mobileBackgroundImage]);
   return (
-    <div className="flex flex-col w-full object-cover px-8 md:px-20  h-max py-4 md:py-6 bg-center bg-cover bg-no-repeat" style={{ 
+    <div className="flex flex-col w-full object-cover px-8 md:px-20  h-auto py-4 md:py-6 bg-center bg-cover bg-no-repeat" style={{ 
       backgroundImage: `url(${backgroundImage})`
     }}>
 
